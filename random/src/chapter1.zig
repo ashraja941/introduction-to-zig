@@ -1,5 +1,14 @@
 const std = @import("std");
 
+pub fn typeOfString() void {
+    // using sentinal terminated strings
+    std.debug.print("{any}\n", .{@TypeOf("A literal value")});
+
+    // using slices
+    const str: []const u8 = "A string value";
+    std.debug.print("{any}\n", .{@TypeOf(str)});
+}
+
 pub fn arrayOperations() void {
     std.debug.print("Array Operations\n", .{});
 
