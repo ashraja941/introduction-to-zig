@@ -2,5 +2,5 @@ const std = @import("std");
 const c1 = @import("chapter1.zig");
 
 pub fn main() !void {
-    c1.typeOfString();
+    try c1.nonEnglish();
 }
