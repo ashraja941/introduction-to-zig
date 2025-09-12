@@ -2,7 +2,7 @@ const std = @import("std");
 const print = std.debug.print;
 
 pub fn main() void {
-    loopDeferTest();
+    display_struct();
 }
 
 pub fn funnyIf(x: u8) void {
@@ -60,4 +60,30 @@ pub fn loopDeferTest() void {
     while (i < 5) : (i += 1) {
         defer print("exit loop ", .{});
     }
+}
+
+const User = struct {
+    id: u8,
+    name: []const u8,
+    fn init(id: u8, name: []const u8) User {
+        return User{
+            .id = id,
+            .name = name,
+        };
+    }
+
+    fn print_struct(self: User) void {
+        print("id : {d}\nname : {s}\n", .{ self.id, self.name });
+    }
+
+    fn twice_id(self: *User) void {
+        self.id = self.id * 2;
+    }
+};
+
+pub fn display_struct() void {
+    var u = User.init(8, "Ash");
+    u.print_struct();
+    u.twice_id();
+    u.print_struct();
 }
