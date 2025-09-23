@@ -5,6 +5,7 @@ const c3 = @import("chapter3.zig");
 //chapter 4 was project
 //chapter 5 was debugging (didn't install debugger)
 const c6 = @import("chapter6.zig");
+const c7 = @import("chapter7.zig");
 
 pub const std_options = @import("logger.zig").options;
 
