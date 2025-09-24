@@ -1,0 +1,86 @@
+const std = @import("std");
+
+pub fn main() !void {
+    try hashTableInit();
+}
+
+fn hashTableInit() !void {
+    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+    const allocator = gpa.allocator();
+
+    var hashTable = std.hash_map.AutoHashMap(u32, u16).init(allocator);
+    defer hashTable.deinit();
+
+    try hashTable.put(5050, 89);
+    try hashTable.put(4000, 3801);
+    try hashTable.put(30, 38013);
+
+    std.debug.print("N of values stored: {d}\n", .{hashTable.count()});
+    std.debug.print("Value at key 5050: {d}\n", .{hashTable.get(5050).?});
+
+    if (hashTable.remove(30)) {
+        std.debug.print("Value at key 57709 successfully removed!\n", .{});
+    }
+    std.debug.print("N of values stored: {d}\n", .{hashTable.count()});
+
+    var it = hashTable.iterator();
+
+    while (it.next()) |kv| {
+        std.debug.print("key : {any} ", .{kv.key_ptr.*});
+        std.debug.print("value : {any}\n", .{kv.value_ptr.*});
+    }
+}
+
+fn appendToArrayList() !void {
+    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+    const allocator = gpa.allocator();
+
+    var buffer = try std.ArrayList(u8).initCapacity(allocator, 100);
+    defer buffer.deinit();
+
+    for (0..10) |i| {
+        const num: u8 = @intCast(i);
+        try buffer.append(num);
+    }
+    std.debug.print("{any}\n", .{buffer.items});
+    _ = buffer.orderedRemove(3);
+    _ = buffer.swapRemove(3);
+
+    std.debug.print("{any}\n", .{buffer.items});
+    std.debug.print("{any}\n", .{buffer.items.len});
+}
+
+fn insertToArrayList() !void {
+    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+    const allocator = gpa.allocator();
+
+    var buffer = try std.ArrayList(u8).initCapacity(allocator, 100);
+    defer buffer.deinit();
+
+    for (0..10) |i| {
+        const num: u8 = @intCast(i);
+        try buffer.append(num);
+    }
+
+    std.debug.print("{any}\n", .{buffer.items});
+    _ = try buffer.insert(3, 40);
+    _ = try buffer.insertSlice(3, &[_]u8{ 50, 50 });
+
+    std.debug.print("{any}\n", .{buffer.items});
+    std.debug.print("{any}\n", .{buffer.items.len});
+}
+
+fn startArrayList() !void {
+    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+    const allocator = gpa.allocator();
+
+    var buffer = try std.ArrayList(u8).initCapacity(allocator, 100);
+    defer buffer.deinit();
+}
+
+test "deinit arraylist" {
+    const allocator = std.testing.allocator;
+
+    var buffer = try std.ArrayList(u8).initCapacity(allocator, 100);
+    defer buffer.deinit();
+}
