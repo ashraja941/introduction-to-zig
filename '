@@ -1,64 +1,12 @@
 const std = @import("std");
 
 pub fn main() !void {
-    try MultiArrayStructure();
-}
-
-const Person = struct {
-    name: []const u8,
-    age: u8,
-    height: f32,
-};
-
-fn MultiArrayStructure() !void {
-    const personArray = std.MultiArrayList(Person);
-
-    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    const allocator = gpa.allocator();
-
-    var people = personArray{};
-    defer people.deinit(allocator);
-
-    try people.append(allocator, .{ .name = "Ash", .age = 24, .height = 10 });
-    try people.append(allocator, .{ .name = "a;sldjf", .age = 24, .height = 10 });
-    try people.append(allocator, .{ .name = "Test", .age = 24, .height = 10 });
-
-    var slice = people.slice();
-
-    for (slice.items(.age), slice.items(.name)) |*a, *n| {
-        std.debug.print("name : {s}, age : {d}\n", .{ n.*, a.* });
-    }
+    try hashTableInit();
 }
 
 const NodeU32 = struct { data: u32, node: std.SinglyLinkedList.Node = .{} };
-const DoubleNodeU32 = struct { data: u32, node: std.DoublyLinkedList.Node = .{} };
 
-fn DoublyLinkedListInit() !void {
-    var ll: std.DoublyLinkedList = .{};
-
-    var one: DoubleNodeU32 = .{ .data = 1 };
-    var two: DoubleNodeU32 = .{ .data = 2 };
-    // var three: DoubleNodeU32 = .{ .data = 3 };
-    var five: DoubleNodeU32 = .{ .data = 5 };
-
-    ll.append(&two.node);
-    ll.insertAfter(&two.node, &five.node);
-    ll.prepend(&one.node);
-
-    std.debug.print("Number of nodes in the linked list : {d}\n", .{ll.len()});
-    _ = ll.popFirst().?;
-    std.debug.print("Number of nodes in the linked list : {d}\n", .{ll.len()});
-    ll.remove(&two.node);
-    std.debug.print("Number of nodes in the linked list : {d}\n", .{ll.len()});
-
-    var it = ll.first;
-    while (it) |node| : (it = node.next) {
-        const l: *DoubleNodeU32 = @fieldParentPtr("node", node);
-        std.debug.print("val : {d}", .{l.data});
-    }
-}
-
-fn SinglylinkedListInit() !void {
+fn linkedListInit() !void {
     var ll: std.SinglyLinkedList = .{};
 
     var one: NodeU32 = .{ .data = 1 };
@@ -70,12 +18,6 @@ fn SinglylinkedListInit() !void {
     two.node.insertAfter(&five.node);
     two.node.insertAfter(&three.node);
     ll.prepend(&one.node);
-
-    std.debug.print("Number of nodes in the linked list : {d}\n", .{ll.len()});
-    _ = ll.popFirst().?;
-    std.debug.print("Number of nodes in the linked list : {d}\n", .{ll.len()});
-    ll.remove(&two.node);
-    std.debug.print("Number of nodes in the linked list : {d}\n", .{ll.len()});
 }
 
 fn hashTableInit() !void {

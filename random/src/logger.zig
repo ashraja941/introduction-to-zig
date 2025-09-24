@@ -19,8 +19,5 @@ pub fn logger(comptime level: std.log.Level, comptime scope: @Type(.enum_literal
     const prefix = "[" ++ comptime level.asText() ++ "] " ++ scope_prefix;
 
     // Print the message to stderr, silently ignoring any errors
-    std.debug.lockStdErr();
-    defer std.debug.unlockStdErr();
-    const stderr = std.io.getStdErr().writer();
-    nosuspend stderr.print("\n" ++ prefix ++ format ++ "\n", args) catch return;
+    std.debug.print("\n" ++ prefix ++ format ++ "\n", args);
 }
