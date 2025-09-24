@@ -6,6 +6,7 @@ const c3 = @import("chapter3.zig");
 //chapter 5 was debugging (didn't install debugger)
 const c6 = @import("chapter6.zig");
 const c7 = @import("chapter7.zig");
+const c10 = @import("chapter10.zig");
 
 pub const std_options = @import("logger.zig").options;
 
@@ -16,7 +17,8 @@ pub fn main() !void {
     // c2.main();
     // try c3.main();
 
-    c6.main();
+    // c6.main();
+    try c10.main();
 
     std.log.info("Finished Execution...", .{});
 }
