@@ -10,6 +10,8 @@ const c8 = @import("chapter8.zig");
 // chapter 9 was build process things
 const c10 = @import("chapter10.zig");
 const c11 = @import("chapter11.zig");
+// chapter 10 was the stack project
+const c12 = @import("chapter12.zig");
 
 pub const std_options = @import("logger.zig").options;
 
@@ -22,7 +24,8 @@ pub fn main() !void {
 
     // c6.main();
     // try c10.main();
-    try c11.main();
+    // try c11.main();
+    try c12.main();
 
     std.log.info("Finished Execution...", .{});
 }
